@@ -26,6 +26,7 @@ This repository contains the implementation of **SynergyX**, a multi-modality mu
 To train the SynergyX model with the optimizations, use the following command:
 
 ```bash
+mkdir experiment
 sh run.sh
 ```
 
