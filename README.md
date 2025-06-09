@@ -62,7 +62,7 @@ We replaced the custom LayerNorm implementation with PyTorch's `nn.LayerNorm`, w
 
 ## Experiments
 
-### Experiment Results
+## Experiment Results
 
 We conducted several experiments to evaluate the impact of the optimizations. The results are summarized below:
 
@@ -70,47 +70,55 @@ We conducted several experiments to evaluate the impact of the optimizations. Th
 
 The optimizations resulted in **up to 2.80× faster training**.
 
-| Method                           | Time (min/epoch) | Speedup   |
-| -------------------------------- | ---------------- | --------- |
-| SynergyX (baseline)              | 2246.47 (338)    | x1        |
-| SynergyX + Flash Attention       | 1654.42 (322)    | x1.29     |
-| SynergyX + Rewritten LayerNorm   | 986.40 (244)     | x1.64     |
-| SynergyX + Mixed Precision       | 1022.14 (286)    | x1.86     |
+<div align="center">
+| Method                           | Time (min/epoch) | Speedup |
+| --------------------------------- | ---------------- | ------- |
+| SynergyX (baseline)              | 2246.47 (338)    | x1      |
+| SynergyX + Flash Attention       | 1654.42 (322)    | x1.29   |
+| SynergyX + Rewritten LayerNorm   | 986.40 (244)     | x1.64   |
+| SynergyX + Mixed Precision       | 1022.14 (286)    | x1.86   |
 | **SynergyX + All Optimizations** | **877.23 (370)** | **x2.80** |
+</div>
 
 ### 2. **Inference Speed**
 
 The optimizations led to a **2.95× speedup** in inference time.
 
-| Configuration | Batch Size | Time (s) | Speedup   |
-| ------------- | ---------- | -------- | --------- |
-| SynergyX      | 32         | 6.7847   | 1x        |
-| Our Method    | 32         | 6.6702   | 1.02x     |
-| SynergyX      | 64         | 5.3384   | 1x        |
-| Our Method    | 64         | 4.4091   | 1.21x     |
-| SynergyX      | 128        | 4.9827   | 1x        |
-| Our Method    | 128        | 2.1349   | 2.33x     |
-| SynergyX      | 256        | 4.8026   | 1x        |
+<div align="center">
+| Configuration | Batch Size | Time (s) | Speedup |
+| ------------- | ---------- | -------- | ------- |
+| SynergyX      | 32         | 6.7847   | 1x      |
+| Our Method    | 32         | 6.6702   | 1.02x   |
+| SynergyX      | 64         | 5.3384   | 1x      |
+| Our Method    | 64         | 4.4091   | 1.21x   |
+| SynergyX      | 128        | 4.9827   | 1x      |
+| Our Method    | 128        | 2.1349   | 2.33x   |
+| SynergyX      | 256        | 4.8026   | 1x      |
 | Our Method    | 256        | 1.6255   | **2.95x** |
+</div>
 
 ### 3. **Memory Efficiency**
 
 Peak GPU memory consumption was reduced by **59%** with our method.
 
+<div align="center">
 | Method         | Batch Size | Memory Used (MiB) | Memory Used (%) |
 | -------------- | ---------- | ----------------- | --------------- |
 | SynergyX       | 512        | 28,329            | 100%            |
 | **Our Method** | 512        | **11,429**        | **40.34%**      |
+</div>
 
 ### 4. **Accuracy**
 
 The optimizations resulted in a negligible **0.61% increase in MSE**.
 
-| Method                    | MSE (Test)  | Time (epochs)            | Speedup   | Precision Loss |
-| ------------------------- | ----------- | ------------------------ | --------- | -------------- |
-| SynergyX                  | **79.7689** | 2246.47 min (338 epochs) | x1        | 0%             |
-| Our Method                | 81.3122     | 622.98 min (255 epochs)  | x2.71     | -1.93%         |
+<div align="center">
+| Method                | MSE (Test)    | Time (epochs)    | Speedup | Precision Loss |
+| --------------------- | ------------- | ---------------- | ------- | -------------- |
+| SynergyX              | **79.7689**   | 2246.47 min (338 epochs) | x1      | 0%             |
+| Our Method            | 81.3122       | 622.98 min (255 epochs)  | x2.71   | -1.93%         |
 | Our Method + Weight Decay | **80.2572** | 877.23 min (370 epochs)  | **x2.80** | **-0.61%**     |
+</div>
 
 ------
 
